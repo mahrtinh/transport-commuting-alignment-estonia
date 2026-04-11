@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the paper and the archived repository release."
+title: "transport-commuting-alignment-estonia"
+type: software
+authors:
+  - family-names: "Haamer"
+    given-names: "Martin"
+    email: "martin.haamer@ut.ee"
+    affiliation: "Mobility Lab, Department of Geography, University of Tartu, Tartu, Estonia"
+  - family-names: "Aasa"
+    given-names: "Anto"
+    affiliation: "Mobility Lab, Department of Geography, University of Tartu, Tartu, Estonia"
+repository-code: "https://github.com/mahrtinh/transport-commuting-alignment-estonia"
+license: "MIT"
+keywords:
+  - "public transport"
+  - "GTFS"
+  - "commuting"
+  - "functional regions"
+  - "accessibility"
+  - "Estonia"
+abstract: "Code and outputs for the study assessing the alignment between Estonia’s public transport network and commuting-based functional regions."
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Haamer"
+      given-names: "Martin"
+    - family-names: "Aasa"
+      given-names: "Anto"
+  title: "Linking Public Transport Provision to Functional Regions: Evaluating Transport–Commuting Alignment in Estonia"
+  year: 2026
