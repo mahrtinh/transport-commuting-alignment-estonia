@@ -12,6 +12,12 @@ Article: [agile-giss.copernicus.org/articles/7/24/2026](https://agile-giss.coper
 
 For one typical weekday (Tuesday 15 April 2025) the analysis detects direct public transport (PT) trips between Estonian localities (EE: *kant*), measures the service from each locality to its designated commuting centre (EE: *toimepiirkonna keskus*), and checks whether PT connects localities to the centre they commute to.
 
+## Example: direct PT connections between localities
+
+![Direct public transport connections between Estonian localities](figures/pt_direct_connections_map.jpg)
+
+Map made in QGIS from `results/pt_adjacent_links.gpkg` (layers `adjacent_links` and `non_adjacent_links`). Each line joins the representative stops of two localities that a bus, train or ferry travels between without stopping in another locality; line width shows the number of daily services (1–737), for all PT types (long-distance, city and county buses, trains, ferries). For example, 83 trips run between Tallinn and Tartu per day, 21 of them without an intermediate stop (the straight line between the two cities). The busiest links are Harkujärve–Tallinn (737 services per day) and Jõhvi–Kohtla-Järve (491).
+
 ## Repository structure
 
 ```
@@ -23,6 +29,7 @@ data/
   GTFS/gtfs_2025_04/gtfs/   national GTFS feed, April 2025
   localities/localities.gpkg  locality polygons with commuting-centre assignment
 results/                    outputs of PT_commute_comparison.R
+figures/                    example map
 ```
 
 ## Data
