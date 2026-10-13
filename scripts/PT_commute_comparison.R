@@ -11,12 +11,14 @@
 # INPUTS (paths set in CONFIG below):
 #   - GTFS feed (gtfs_folder): routes, trips, stops, stop_times, calendar,
 #     calendar_dates
-#   - Localities GeoPackage (toimepiirkonnad_gpkg): locality polygons
-#     (EPSG:3301) with code (CODE), name (KANT_NI) and commuting centre
-#     (keskus, keskus_CODE) from the functional regions dataset.
-#     Optional columns, not in the public file: population (RAHVAAR),
-#     employed residents (t66tajad_n) and % of them working in the centre
-#     (osak_t66tajatest). Without them these columns are NA in the output.
+#   - Functional areas GeoPackage (toimepiirkonnad_gpkg, layer "kandid"):
+#     Aasa, A. (2026). Commuting-based functional areas and their centres in
+#     Estonia, 2021 (v1.0) [Dataset]. Zenodo.
+#     https://doi.org/10.5281/zenodo.23240154 (CC BY 4.0).
+#     Downloaded from Zenodo on the first run. Uses locality polygons
+#     (EPSG:3301) with code (CODE), name (KANT_NI), commuting centre
+#     (keskus, keskus_CODE), population (RAHVAAR), employed residents
+#     (t66tajad_n) and % of them working in the centre (osak_t66tajatest).
 #
 # OUTPUTS (results/):
 #   - pt_commute_comparison.csv / .gpkg   one row per locality: PT metrics,
@@ -67,7 +69,7 @@
 #   Packages: tidyverse, sf, scales
 #
 # LAST UPDATED:
-#   - 2026-09-24
+#   - 2026-10-12
 # ============================================================================
 
 library(tidyverse)
@@ -80,7 +82,10 @@ options(scipen = 999)
 # ------------------------------------------------------------
 
 gtfs_folder <- "data/GTFS/gtfs_2025_04/gtfs"
-toimepiirkonnad_gpkg <- "data/localities/localities.gpkg"
+# Functional areas dataset (Aasa 2026, https://doi.org/10.5281/zenodo.23240154)
+toimepiirkonnad_gpkg  <- "data/toimepiirkonnad/toimepiirkonnad_2021.gpkg"
+toimepiirkonnad_layer <- "kandid"
+toimepiirkonnad_url   <- "https://zenodo.org/records/23240154/files/toimepiirkonnad_2021.gpkg?download=1"
 
 # Use 2025-04-15 
 target_date <- as.Date("2025-04-15")
@@ -112,8 +117,15 @@ stop_times <- read_gtfs("stop_times")
 calendar   <- read_gtfs("calendar")
 cal_dates  <- read_gtfs("calendar_dates")
 
+if (!file.exists(toimepiirkonnad_gpkg)) {
+  cat("Downloading toimepiirkonnad from Zenodo...\n")
+  dir.create(dirname(toimepiirkonnad_gpkg), recursive = TRUE, showWarnings = FALSE)
+  options(timeout = max(600, getOption("timeout")))
+  download.file(toimepiirkonnad_url, toimepiirkonnad_gpkg, mode = "wb")
+}
+
 cat("Loading toimepiirkonnad...\n")
-kants <- st_read(toimepiirkonnad_gpkg, quiet = TRUE)
+kants <- st_read(toimepiirkonnad_gpkg, layer = toimepiirkonnad_layer, quiet = TRUE)
 
 # Type conversions
 stops <- stops %>%
@@ -823,23 +835,12 @@ cat("  Validation inputs saved:", validation_inputs_rds, "\n")
 
 cat("Comparing PT destinations with commuting centers...\n")
 
-# Get keskus_CODE for each locality from original data.
-# Commuting attributes are optional: the public localities file has only
-# CODE, KANT_NI, keskus and keskus_CODE. Missing ones are set to NA.
-commuting_cols <- c(population = "RAHVAAR", workers = "t66tajad_n",
-                    share_to_center = "osak_t66tajatest")
-
+# Get keskus_CODE and commuting attributes for each locality from original data.
 kant_keskus <- kants %>%
   st_drop_geometry() %>%
   select(kant_CODE = CODE, kant_name = KANT_NI, keskus_CODE, keskus_name = keskus,
-         any_of(commuting_cols))
-
-missing_commuting_cols <- setdiff(names(commuting_cols), names(kant_keskus))
-for (col in missing_commuting_cols) kant_keskus[[col]] <- NA_real_
-if (length(missing_commuting_cols) > 0) {
-  cat("  Commuting data not in localities file (set to NA):",
-      paste(missing_commuting_cols, collapse = ", "), "\n")
-}
+         population = RAHVAAR, workers = t66tajad_n,
+         share_to_center = osak_t66tajatest)
 
 # Calculate trips from each locality to its specific centre
 trips_to_keskus <- kant_od_counts %>%

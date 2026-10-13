@@ -20,6 +20,22 @@ keywords:
   - "accessibility"
   - "Estonia"
 abstract: "Code and outputs for the study assessing the alignment between Estonia’s public transport network and commuting-based functional regions."
+references:
+  - type: dataset
+    authors:
+      - family-names: "Aasa"
+        given-names: "Anto"
+        affiliation: "University of Tartu"
+        orcid: "https://orcid.org/0000-0002-7786-3977"
+    title: "Commuting-based functional areas and their centres in Estonia, 2021"
+    version: "1.0"
+    year: 2026
+    date-published: "2026-10-08"
+    publisher:
+      name: "Zenodo"
+    doi: "10.5281/zenodo.23240154"
+    url: "https://zenodo.org/records/23240154"
+    license: "CC-BY-4.0"
 preferred-citation:
   type: article
   authors:

@@ -4,13 +4,17 @@ Code and outputs for the study by Martin Haamer and Anto Aasa on the alignment b
 
 ## Overview
 
-This repository documents the methodology of the paper, with the analysis code, input data and derived outputs:
+This repository documents the methodology of the paper, with the analysis code, public transport input data and derived outputs:
 
 **Haamer, M. and Aasa, A.** (2026). *Linking Public Transport Provision to Functional Regions: Evaluating Transport–Commuting Alignment in Estonia.* AGILE GIScience Series, 7, 24. [https://doi.org/10.5194/agile-giss-7-24-2026](https://doi.org/10.5194/agile-giss-7-24-2026)
 
 Article: [agile-giss.copernicus.org/articles/7/24/2026](https://agile-giss.copernicus.org/articles/7/24/2026/)
 
 For one typical weekday (Tuesday 15 April 2025) the analysis detects direct public transport (PT) trips between Estonian localities (EE: *kant*), measures the service from each locality to its designated commuting centre (EE: *toimepiirkonna keskus*), and checks whether PT connects localities to the centre they commute to.
+
+The functional regions and their centres come from the published dataset:
+
+**Aasa, A.** (2026). *Commuting-based functional areas and their centres in Estonia, 2021* (Version 1.0) [Dataset]. Zenodo. [https://doi.org/10.5281/zenodo.23240154](https://doi.org/10.5281/zenodo.23240154)
 
 ## Example: direct PT connections between localities
 
@@ -27,7 +31,7 @@ scripts/
   as_published/             scripts as used for the published article
 data/
   GTFS/gtfs_2025_04/gtfs/   national GTFS feed, April 2025
-  localities/localities.gpkg  locality polygons with commuting-centre assignment
+  toimepiirkonnad/          functional areas dataset, downloaded from Zenodo on first run (not tracked)
 results/                    outputs of PT_commute_comparison.R
 figures/                    example map
 ```
@@ -37,13 +41,21 @@ figures/                    example map
 | File | Content | Source |
 |---|---|---|
 | `data/GTFS/gtfs_2025_04/gtfs/` | Public transport schedules (GTFS) | Estonian Transport Administration (Transpordiamet), open data |
-| `data/localities/localities.gpkg` | 840 locality polygons (EPSG:3301) with code (`CODE`), name (`KANT_NI`), commuting centre (`keskus`) and its code (`keskus_CODE`) | Derived from the functional regions dataset of the “Eesti 2050” national planning process |
+| `data/toimepiirkonnad/toimepiirkonnad_2021.gpkg` (layer `kandid`) | 840 locality polygons (EPSG:3301) with code (`CODE`), name (`KANT_NI`), commuting centre (`keskus`, `keskus_CODE`), population (`RAHVAAR`), employed residents (`t66tajad_n`) and share of them working in the centre (`osak_t66tajatest`) | Aasa (2026), [doi:10.5281/zenodo.23240154](https://doi.org/10.5281/zenodo.23240154), CC BY 4.0; derived from Statistics Estonia 2021 data |
 
-The functional regions dataset itself is not publicly available. This repository includes only the locality boundaries and their commuting-centre assignment. Population, employment and commuting-share attributes are not included; the corresponding output columns (`population`, `workers`, `share_to_center`) are therefore empty. If you have access to the full dataset, point `toimepiirkonnad_gpkg` in the script’s CONFIG section to it and these columns are filled in.
+### Functional regions
+
+The functional regions (21 functional areas and their centres) are delineated from the Statistics Estonia 2021 home-to-work commuting origin–destination matrix at locality level, with a territorial contiguity constraint and a minimum population of 5,000. They were created for the settlement development scenarios study of the Estonian national spatial plan (ÜRP 2050) and are published on Zenodo:
+
+> Aasa, A. (2026). Commuting-based functional areas and their centres in Estonia, 2021 (Version 1.0) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.23240154
+
+The dataset is not redistributed in this repository. `scripts/PT_commute_comparison.R` downloads `toimepiirkonnad_2021.gpkg` from the Zenodo record into `data/toimepiirkonnad/` on its first run and reads the `kandid` layer. To download it manually, get the file from [the Zenodo record](https://zenodo.org/records/23240154) and save it at that path. The codebook (`codebook.csv`) and documentation of the dataset are in the same record.
+
+This is the same functional regions data that was used for the published article.
 
 ## How to run
 
-Requirements: R with the packages `tidyverse`, `sf` and `scales`.
+Requirements: R with the packages `tidyverse`, `sf` and `scales`, and an internet connection on the first run (to download the functional regions dataset from Zenodo).
 
 Run from the repository root (all paths are relative):
 
@@ -141,11 +153,15 @@ If you use this repository, please cite the associated paper and the archived re
 
 > Haamer, M. and Aasa, A.: Linking Public Transport Provision to Functional Regions: Evaluating Transport–Commuting Alignment in Estonia, AGILE GIScience Ser., 7, 24, https://doi.org/10.5194/agile-giss-7-24-2026, 2026.
 
+If you use the functional regions, please also cite the dataset:
+
+> Aasa, A. (2026). Commuting-based functional areas and their centres in Estonia, 2021 (Version 1.0) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.23240154
+
 See `CITATION.cff` for citation metadata.
 
 ## License
 
-The code is released under the MIT License (see `LICENSE`). The input data are subject to the terms of their original providers (see [Data](#data)).
+The code is released under the MIT License (see `LICENSE`). The input data are subject to the terms of their original providers (see [Data](#data)); the functional regions dataset is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ## Contact
 
