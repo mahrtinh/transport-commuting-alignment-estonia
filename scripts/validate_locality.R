@@ -6,6 +6,10 @@
 #   lists every outbound (locality → centre) and inbound (centre → locality)
 #   trip on the target date, with AM/PM window flags, for checking in QGIS.
 #
+# REPOSITORY:
+#   https://gitlab.ut.ee/ut-mobilitylab-public/transport-commuting-alignment-estonia
+#   Archived release: https://doi.org/10.5281/zenodo.23365662
+#
 # REQUIRES:
 #   Run PT_commute_comparison.R first. It saves the intermediate objects
 #   used here to results/pt_validation_inputs.rds.

@@ -1,6 +1,11 @@
 # Linking Public Transport Provision to Functional Regions: Evaluating Transport–Commuting Alignment in Estonia
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23365662.svg)](https://doi.org/10.5281/zenodo.23365662)
+
 Code and outputs for the study by Martin Haamer and Anto Aasa on the alignment between Estonia’s public transport network and commuting-based functional regions.
+
+Repository: [gitlab.ut.ee/ut-mobilitylab-public/transport-commuting-alignment-estonia](https://gitlab.ut.ee/ut-mobilitylab-public/transport-commuting-alignment-estonia) (moved from github.com/mahrtinh/transport-commuting-alignment-estonia)  
+Archived release: [doi:10.5281/zenodo.23365662](https://doi.org/10.5281/zenodo.23365662)
 
 ## Overview
 
@@ -124,12 +129,12 @@ Main columns of `pt_commute_comparison.csv`:
 
 The code in `scripts/` has been revised since the article was published. The scripts that produced the published results are kept unchanged in `scripts/as_published/`.
 
-The revision corrects how trips to the commuting centre are counted and timed:
+The revision changes four things in how trips to the commuting centre are counted and timed:
 
-- A trip with several stops in the origin locality was counted once per stop; it now counts once.
-- On loop routes passing the origin stop twice, travel time was measured from the first pass; it is now measured from the last.
-- Travel time is measured to the centre stop with the most incoming services from the centre's localities, instead of the last centre stop on the trip.
-- Harbour stops just outside the locality polygons (e.g. Heltermaa) were dropped; they are now assigned to the nearest locality.
+- **Trips stopping more than once in the origin locality.** When a bus stopped at several stops within the same locality on its way to the centre, the published code counted it as several trips (one per stop). The revised code counts it as one trip.
+- **Loop routes.** When a route passed the same origin stop twice before reaching the centre, the published code measured travel time from the first pass. The revised code measures it from the last pass, so the time spent going around the loop is not included.
+- **Arrival stop in the centre.** The published code measured travel time to the last stop the trip made in the centre locality. The revised code measures it to the centre's main stop (the one with the most incoming services, usually the bus station).
+- **Harbour stops.** Stops just outside the locality polygons (e.g. Heltermaa harbour) were dropped in the published code. The revised code assigns them to the nearest locality.
 
 The alignment and minimum-service results are essentially unchanged. The travel-time results (Section 3.2, Table 3, Fig. 3) change:
 
@@ -152,6 +157,8 @@ AI tools (Claude) were used in developing this repository: for structuring the c
 If you use this repository, please cite the associated paper and the archived repository release:
 
 > Haamer, M. and Aasa, A.: Linking Public Transport Provision to Functional Regions: Evaluating Transport–Commuting Alignment in Estonia, AGILE GIScience Ser., 7, 24, https://doi.org/10.5194/agile-giss-7-24-2026, 2026.
+
+> Haamer, M. and Aasa, A. (2026). transport-commuting-alignment-estonia (Version 1.1.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.23365662
 
 If you use the functional regions, please also cite the dataset:
 

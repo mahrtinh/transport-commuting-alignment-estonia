@@ -10,7 +10,10 @@ authors:
   - family-names: "Aasa"
     given-names: "Anto"
     affiliation: "Mobility Lab, Department of Geography, University of Tartu, Tartu, Estonia"
-repository-code: "https://github.com/mahrtinh/transport-commuting-alignment-estonia"
+version: "1.1.0"
+date-released: "2026-10-14"
+doi: "10.5281/zenodo.23365662"
+repository-code: "https://gitlab.ut.ee/ut-mobilitylab-public/transport-commuting-alignment-estonia"
 license: "MIT"
 keywords:
   - "public transport"

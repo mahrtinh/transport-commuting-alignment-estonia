@@ -8,6 +8,10 @@
 #   centre (trips, travel time, frequency, AM arrival / PM return), checks
 #   whether PT serves the assigned centre, and writes tabular and spatial outputs.
 #
+# REPOSITORY:
+#   https://gitlab.ut.ee/ut-mobilitylab-public/transport-commuting-alignment-estonia
+#   Archived release: https://doi.org/10.5281/zenodo.23365662
+#
 # INPUTS (paths set in CONFIG below):
 #   - GTFS feed (gtfs_folder): routes, trips, stops, stop_times, calendar,
 #     calendar_dates
@@ -69,7 +73,7 @@
 #   Packages: tidyverse, sf, scales
 #
 # LAST UPDATED:
-#   - 2026-10-12
+#   - 2026-10-14
 # ============================================================================
 
 library(tidyverse)
