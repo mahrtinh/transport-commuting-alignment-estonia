@@ -1,5 +1,10 @@
 # Linking Public Transport Provision to Functional Regions: Evaluating Transport–Commuting Alignment in Estonia
 
+> [!IMPORTANT]
+> **This repository has moved to GitLab:** https://gitlab.ut.ee/ut-mobilitylab-public/transport-commuting-alignment-estonia
+>
+> The up-to-date version is maintained there. This GitHub copy is archived and no longer updated. Archived release: https://doi.org/10.5281/zenodo.23365662
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23365662.svg)](https://doi.org/10.5281/zenodo.23365662)
 
 Code and outputs for the study by Martin Haamer and Anto Aasa on the alignment between Estonia’s public transport network and commuting-based functional regions.
